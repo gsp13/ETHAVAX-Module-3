@@ -7,14 +7,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DRACHMA is ERC20, ERC20Burnable, Ownable {
     constructor() ERC20("DRACHMA", "DRC") {
-        _mint(msg.sender, 100 * 10 ** decimals());
     }
-
     function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+        _mint(to, amount * 10  ** decimals());
     }
-    function burnTokens(uint256 tokenAmount) public {
+    function burn(uint256 tokenAmount) override public {
         require(balanceOf(msg.sender)>= tokenAmount,"You cannot burn the specified token amount given your account balance");
-        _burn(msg.sender,tokenAmount);
+        _burn(msg.sender,tokenAmount * 10  ** decimals());
     }
 }
